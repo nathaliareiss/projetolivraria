@@ -1,11 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { createGlobalStyle } from 'styled-components';
 import CardRecomenda from './componentes/recomendacoes';
-
-
+import { BrowserRouter , Routes, Route } from 'react-router-dom' 
+import Header from './componentes/Header';
+import Home from './rotas/Home';
+import Favoritos from './rotas/favoritos';
 
 const GlobalStyle = createGlobalStyle`
     body {
@@ -29,9 +30,27 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <GlobalStyle/>
-    <App />
+    <BrowserRouter>
+     <Header/>
+      <Routes>
+          <Route path="favoritos" element={<Favoritos/>}/>
+          <Route path="/" element={  <Home />}/>
+
+
+      </Routes>
+    
+    
+    </BrowserRouter>
   </React.StrictMode>
 );
+//aqui e feito a importacao do reac router dom para estabelecer as rotas
+//lembrando de colocar browser router primeiro, router segundo e route em terceiro
+//ja com as especificacoes de rota e elemento
+// pegamos o componente de cabecalho e colocamos aqui para
+//que ele exista em todas as paginas
+
+
+
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
