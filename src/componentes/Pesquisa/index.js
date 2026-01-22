@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import Input from "../Input";
-import { useState } from "react";
-import { livros } from './dadosPesquisa'
+import { useEffect, useState } from "react";
+import { getLivros } from "../../servicos/livros";
+
 
 const PesquisaContainer = styled.section`
         background-image: linear-gradient(90deg, #002F52 35%, #326589 165%);
@@ -39,28 +40,92 @@ const Resultado = styled.div`
         border: 1px solid white;
     }
 `
+const SearchBar = styled.div`
+  display: flex;
+  justify-content: center;
+  margin: 10px 0;
+
+`
+const Form = styled.form`
+   display: flex;
+  align-items: center;
+  background: transparent; /* transparente */
+  border: 1px solid #ccc;
+  border-radius: 25px;
+  padding: 5px 10px;
+  width: 250px; /* controla largura */
+
+`;
+
+const SearchButton = styled.button`
+  background-color: #cd76cc; /* cor rosa */
+  color: #111011;
+  border: none;
+  padding: 5px ;
+  border-radius: 17px; /* arredonda só o lado direito */
+  cursor: pointer;
+
+  &:hover {
+    background-color: #d14ccf; /* rosa mais forte no hover */
+  }
+`;
+
 
 
 
 function Pesquisa () {
     const [livroPesquisado, setlivroPesquisado] =useState([])
+    const [livros, setLivros] =useState([])
 
+    useEffect(()=>{
+      fetchLivros()
+    },[])
+
+
+async function fetchLivros(){
+      const livrosDaApi=await getLivros()
+      setLivros(livrosDaApi)
+    }
+
+
+// async function insertFavorito(id){
+//     await postFavorito(id)
+//     alert(`Livro de id:${id} inserido!`)
+// }
 
     return(
  <PesquisaContainer>
         <Titulo>Por onde comecar?</Titulo>
         <Subtitulo>Encontre seu livro em nossa estante</Subtitulo>
-        <Input
-            placeholder="Escreva sua proxima leitura"
-            onBlur={evento => {
-                const textoDigitado = evento.target.value
-                const resultadoPesquisa = livros.filter( livro => livro.nome.includes(textoDigitado))
-                setlivroPesquisado(resultadoPesquisa)
-            }}
-        />
+   
+    <SearchBar>
+          
+    <Form
+        onSubmit={evento => {
+        evento.preventDefault(); // evita recarregar a página
+        const textoDigitado = evento.target.elements.pesquisa.value;
+        const resultadoPesquisa = livros.filter(livro =>
+            livro.titulo.toLowerCase().includes(textoDigitado.toLowerCase())
+        );
+        setlivroPesquisado(resultadoPesquisa);
+    }}
+  >
+   
+     <Input
+      name="pesquisa"
+      placeholder="Escreva sua próxima leitura"
+    />
+    <SearchButton type="submit">Pesquisar</SearchButton>
+    
+    </Form>
+   
+    </SearchBar>
+    
+
+
        {livroPesquisado.map(livro => (
         <Resultado>
-        <p>{livro.nome}</p>
+        <p>{livro.titulo}</p>
         <img src={livro.src}/>
         </Resultado>
        ))}

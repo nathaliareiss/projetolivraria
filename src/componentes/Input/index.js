@@ -2,21 +2,16 @@ import styled from "styled-components";
 
 
 const Input = styled.input`
-    border: 1px solid #fff;
-            background: transparent;
-            border: 1px solid #fff;
-            padding: 20px 140px;
-            border-radius: 50px;
-            width: 200px;
-            color: #fff;
-            font-size: 16px;
-            margin-bottom: 10px;
-
-            &::placeholder {
-                    color: #FFF;
-                    font-size: 16px;
-            }
+    
+   flex: 1;                  /* ocupa o espaço disponível */
+  border: none;             /* remove a borda padrão */
+  background: transparent;  /* deixa transparente */
+  outline: none;            /* remove a borda azul ao clicar */
+  font-size: 14px;
+  color: #e998cb;              /* cor do texto digitado */
+  padding: 7px;
 `
+
 
 
 export default Input
