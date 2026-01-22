@@ -1,9 +1,9 @@
 import axios from 'axios'
 
-const favoritosApi = axios.create({baseURL:"http://localhost:8000/favoritos"})
+const favoritosAPI = axios.create({baseURL:"http://localhost:8000/favoritos"})
 
 async function getFavoritos() {
-    const response = await favoritosApi.get('/')
+    const response = await favoritosAPI.get('/')
 
     return response.data
 }
