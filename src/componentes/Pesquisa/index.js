@@ -2,7 +2,8 @@ import styled from "styled-components";
 import Input from "../Input";
 import { useEffect, useState } from "react";
 import { getLivros } from "../../servicos/livros";
-
+import { postFavorito } from "../../servicos/favoritos.js";
+import livroimg from "../imagens/livro.png"
 
 const PesquisaContainer = styled.section`
         background-image: linear-gradient(90deg, #002F52 35%, #326589 165%);
@@ -88,10 +89,10 @@ async function fetchLivros(){
     }
 
 
-// async function insertFavorito(id){
-//     await postFavorito(id)
-//     alert(`Livro de id:${id} inserido!`)
-// }
+ async function insertFavorito(livro) {
+            await postFavorito(livro)
+            alert(`Livro de nome: ${(livro.titulo).toUpperCase()} foi inserido!`)
+}
 
     return(
  <PesquisaContainer>
@@ -121,12 +122,11 @@ async function fetchLivros(){
    
     </SearchBar>
     
-
-
        {livroPesquisado.map(livro => (
-        <Resultado>
+        <Resultado onClick={()=> insertFavorito(livro)} key={livro._id || livro.id}>
+        <img src={livroimg} alt={livro.titulo}/>
         <p>{livro.titulo}</p>
-        <img src={livro.src}/>
+
         </Resultado>
        ))}
  </PesquisaContainer>

@@ -17,7 +17,7 @@ const Opcoes = styled.ul`
     display: flex;
 `
 
-const textoOpcoes = ['CATEGORIAS','FAVORITOS','ESTANTE']
+const textoOpcoes = ['CATEGORIAS','FAVORITOS','ESTANTE','CALENDARIO']
 
 
 function OpcoesHeader() {
