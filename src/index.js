@@ -8,9 +8,10 @@ import Header from './componentes/Header';
 import Home from './rotas/Home';
 import Favoritos from './rotas/favoritos';
 import Calendario from './componentes/Calendario';
+import Register from './rotas/registro';
 
-const GlobalStyle = createGlobalStyle`
-    body {
+const GlobalStyle = createGlobalStyle
+   ` body {
       margin: 0;
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
         'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -25,8 +26,9 @@ const GlobalStyle = createGlobalStyle`
       li{
         list-style:none;
       }
+        `
+ 
 
-`
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
@@ -37,7 +39,7 @@ root.render(
           <Route path="/favoritos" element={<Favoritos/>}/>
           <Route path="/" element={  <Home />}/>
           <Route path="/calendario" element={<Calendario/>}/>
-
+          <Route path="/cadastre-se" element={<Register/>}/>
       </Routes>
     
     
