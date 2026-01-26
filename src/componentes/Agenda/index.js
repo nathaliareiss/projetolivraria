@@ -1,7 +1,7 @@
 
 
 
-function Calendario(){
+function Agenda(){
     function conectarGoogle() {
   window.location.href = "http://localhost:8000/auth/google";
 }
@@ -15,4 +15,4 @@ function Calendario(){
 }
 
 
-export default Calendario
+export default Agenda

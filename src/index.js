@@ -7,8 +7,11 @@ import { BrowserRouter , Routes, Route } from 'react-router-dom'
 import Header from './componentes/Header';
 import Home from './rotas/Home';
 import Favoritos from './rotas/favoritos';
-import Calendario from './componentes/Calendario';
+import Calendario from './rotas/calendario';
 import Register from './rotas/registro';
+import Login from './rotas/login';
+
+
 
 const GlobalStyle = createGlobalStyle
    ` body {
@@ -36,10 +39,12 @@ root.render(
     <BrowserRouter>
      <Header/>
       <Routes>
-          <Route path="/favoritos" element={<Favoritos/>}/>
+        
           <Route path="/" element={  <Home />}/>
-          <Route path="/calendario" element={<Calendario/>}/>
           <Route path="/cadastre-se" element={<Register/>}/>
+          <Route path="/login" element={<Login/>}/>
+            <Route path="/favoritos" element={<Favoritos/>}/>
+          <Route path="/calendario" element={<Calendario/>}/>
       </Routes>
     
     
