@@ -2,11 +2,8 @@ import { useState } from "react";
 import axios from "axios";
 
 export default function Register() {
-  const [form, setForm] = useState({
-    nome: "",
-    email: "",
-    senha: "",
-  });
+  const [form, setForm] = useState({ nome: "", email: "", senha: "" });
+  const [erro, setErro] = useState("");
 
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -14,43 +11,35 @@ export default function Register() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    setErro("");
 
     try {
-      await axios.post("http://localhost:8000/auth/register", form);
-      alert("Cadastro realizado com sucesso!");
-    } catch (error) {
-      alert("Erro ao cadastrar");
+      await axios.post("http://localhost:8000/cadastre-se", form);
+      alert("Cadastro realizado com sucesso");
+    } catch (err) {
+      // 👇 AQUI ESTÁ A CHAVE
+      if (err.response && err.response.data?.mensagem) {
+        setErro(err.response.data.mensagem);
+      } else {
+        setErro("Erro inesperado ao cadastrar");
+      }
     }
   }
 
   return (
     <form onSubmit={handleSubmit}>
-      <h2>Criar conta</h2>
-
-      <input
-        name="nome"
-        placeholder="Nome"
-        onChange={handleChange}
-        required
-      />
-
-      <input
-        name="email"
-        placeholder="Email"
-        type="email"
-        onChange={handleChange}
-        required
-      />
-
+      <input name="nome" placeholder="Nome" onChange={handleChange} />
+      <input name="email" placeholder="Email" onChange={handleChange} />
       <input
         name="senha"
-        placeholder="Senha"
         type="password"
+        placeholder="Senha"
         onChange={handleChange}
-        required
       />
 
-      <button type="submit">Cadastrar</button>
+      {erro && <p style={{ color: "red" }}>{erro}</p>}
+
+      <button>Cadastrar</button>
     </form>
   );
 }
