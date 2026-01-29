@@ -1,9 +1,6 @@
 import styled from "styled-components";
 import Input from "../Input";
-import { useEffect, useState } from "react";
-import { getLivros } from "../../servicos/livros";
-import { postFavorito } from "../../servicos/favoritos.js";
-import livroimg from "../imagens/livro.png"
+import {  useState } from "react";
 
 const PesquisaContainer = styled.section`
         background-image: linear-gradient(90deg, #002F52 35%, #326589 165%);
@@ -73,62 +70,36 @@ const SearchButton = styled.button`
 
 
 
+function Pesquisa({ onBuscar }) {
+  const [valor, setValor] = useState('')
 
-function Pesquisa () {
-    const [livroPesquisado, setlivroPesquisado] =useState([])
-    const [livros, setLivros] =useState([])
-
-    useEffect(()=>{
-      fetchLivros()
-    },[])
-
-
-async function fetchLivros(){
-      const livrosDaApi=await getLivros()
-      setLivros(livrosDaApi)
+  function handleSubmit(e) {
+    e.preventDefault()
+    if (valor.trim()) {
+      onBuscar(valor)
     }
-
-
- async function insertFavorito(livro) {
-            await postFavorito(livro)
-            alert(`Livro de nome: ${(livro.titulo).toUpperCase()} foi inserido!`)
-}
-
+  }
     return(
  <PesquisaContainer>
         <Titulo>Por onde comecar?</Titulo>
         <Subtitulo>Encontre seu livro em nossa estante</Subtitulo>
    
     <SearchBar>
-          
     <Form
-        onSubmit={evento => {
-        evento.preventDefault(); // evita recarregar a página
-        const textoDigitado = evento.target.elements.pesquisa.value;
-        const resultadoPesquisa = livros.filter(livro =>
-            livro.titulo.toLowerCase().includes(textoDigitado.toLowerCase())
-        );
-        setlivroPesquisado(resultadoPesquisa);
-    }}
+        onSubmit={handleSubmit}
   >
-   
      <Input
-      name="pesquisa"
-      placeholder="Escreva sua próxima leitura"
+      type="text"
+        placeholder="Busque um livro"
+        value={valor}
+        onChange={e => setValor(e.target.value)}
     />
     <SearchButton type="submit">Pesquisar</SearchButton>
-    
     </Form>
    
     </SearchBar>
     
-       {livroPesquisado.map(livro => (
-        <Resultado onClick={()=> insertFavorito(livro)} key={livro._id || livro.id}>
-        <img src={livroimg} alt={livro.titulo}/>
-        <p>{livro.titulo}</p>
-
-        </Resultado>
-       ))}
+      
  </PesquisaContainer>
     )
 }
