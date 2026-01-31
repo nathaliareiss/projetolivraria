@@ -17,7 +17,7 @@ const Opcoes = styled.ul`
     display: flex;
 `
 
-const textoOpcoes = ['CADASTRE-SE','LOGIN','CALENDARIO','FAVORITOS','ESTANTE',]
+const textoOpcoes = ['CADASTRE-SE','LOGIN','CALENDARIO','FAVORITOS','ESTANTE']
 
 
 function OpcoesHeader() {

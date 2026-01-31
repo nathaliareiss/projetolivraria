@@ -25,6 +25,7 @@ function Header(){
       <Link to="/">
         <Logo/>
       </Link>
+      
          <OpcoesHeader/>
          <IconesHeader/>
 

@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 import api from "../servicos/api";
+import DesconectarGoogle from "../componentes/logoutGoogle";
+import ConectarGoogle from "../componentes/botaoGoogle";
+
 
 export default function Calendario() {
   const [eventos, setEventos] = useState([]);
@@ -29,7 +32,7 @@ export default function Calendario() {
     setErro("");
 
     try {
-      await api.post("/calendar/events", {
+      await api.post("/calendar/event", {
         summary: titulo,
         startISO: inicio,
         endISO: fim,
@@ -50,6 +53,9 @@ export default function Calendario() {
   return (
     <div>
       <h1>📅 Meu Calendário de Leitura</h1>
+    <ConectarGoogle/>
+    
+    <DesconectarGoogle/>
 
       {erro && <p style={{ color: "red" }}>{erro}</p>}
 

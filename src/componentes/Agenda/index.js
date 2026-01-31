@@ -1,6 +1,5 @@
 
 
-
 function Agenda(){
     function conectarGoogle() {
   window.location.href = "http://localhost:8000/auth/google";
@@ -12,7 +11,11 @@ function Agenda(){
      </button>
      </div>
     )
+
+
+    
 }
+
 
 
 export default Agenda
