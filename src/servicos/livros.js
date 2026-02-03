@@ -39,7 +39,7 @@ async function alternarQueroLer(livroId){
 }
 //aqui iniciamos a leitura
 async function iniciarLeitura(livroId){
-    const response= await api.post(`/leitura/iniciar/${livroid}`)
+    const response= await api.post(`/leitura/iniciar/${livroId}`)
     return response.data
 }
 //aqui finalizamos a leitura

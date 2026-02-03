@@ -1,4 +1,4 @@
-function DesconectarGoogle() {
+function DesconectarGoogle({ className }) {
   const desconectar = async () => {
     const token = localStorage.getItem("token");
 
@@ -19,7 +19,7 @@ function DesconectarGoogle() {
   };
 
   return (
-    <button onClick={desconectar} style={{ background: "red", color: "white" }}>
+    <button className={ className } onClick={desconectar} style={{ background: "red", color: "white" }}>
       Desconectar Google Calendar
     </button>
   );

@@ -1,4 +1,4 @@
-function ConectarGoogle() {
+function ConectarGoogle({className}) {
   const conectarGoogle = () => {
     const token = localStorage.getItem("token");
 
@@ -12,7 +12,7 @@ function ConectarGoogle() {
   };
 
   return (
-    <button onClick={conectarGoogle}>
+    <button className={className}onClick={conectarGoogle}>
       Conectar Google Calendar
     </button>
   );

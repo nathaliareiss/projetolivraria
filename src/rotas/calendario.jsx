@@ -1,30 +1,105 @@
+import styled from "styled-components";
 import { useEffect, useState } from "react";
 import api from "../servicos/api";
 import DesconectarGoogle from "../componentes/logoutGoogle";
 import ConectarGoogle from "../componentes/botaoGoogle";
 
 
+
+const AppContainer = styled.div`
+  width: 100vw;
+  min-height: 100vh;
+  background-image: linear-gradient(90deg,#002F52 35%,#326589 165%);
+  padding: 40px 20px;
+`;
+
+const Titulo = styled.h2`
+  color: #FFF;
+  font-size: 36px;
+  text-align: center;
+  margin-bottom: 30px;
+`;
+
+const Actions = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 30px;
+`;
+
+const Card = styled.div`
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 20px;
+  max-width: 600px;
+  margin: 0 auto 30px;
+  color: #fff;
+`;
+
+const Input = styled.input`
+  width: 100%;
+  margin-bottom: 12px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: none;
+`;
+
+const Button = styled.button`
+  background-color: #cd76cc;
+  color: #111011;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  &:hover {
+    background-color: #d14ccf;
+  }
+`;
+
+const EventosGrid = styled.div`
+  display: grid;
+  gap: 16px;
+  max-width: 700px;
+  margin: 0 auto;
+`;
+
+const EventoCard = styled.div`
+  background: rgba(255,255,255,0.1);
+  padding: 15px;
+  border-radius: 8px;
+  color: #fff;
+`;
+
+const GoogleButton = styled(Button)``;
+
+
 export default function Calendario() {
   const [eventos, setEventos] = useState([]);
   const [erro, setErro] = useState("");
-
   const [titulo, setTitulo] = useState("");
   const [inicio, setInicio] = useState("");
   const [fim, setFim] = useState("");
-
-  // 🔹 Carregar eventos ao abrir a página
+  const [eventosGoogle, setEventosGoogle] = useState([]);
+  const [leituras, setLeituras] = useState([]);
+  
   useEffect(() => {
-    carregarEventos();
-  }, []);
-
-  async function carregarEventos() {
-    try {
-      const res = await api.get("/calendar");
-      setEventos(res.data);
-    } catch (err) {
-      setErro("Você precisa estar logado");
+    async function carregar() {
+      try {
+        const [eventsRes, leiturasRes] = await Promise.all([
+          api.get("/calendar/events"),
+          api.get("/leitura"),
+        ]);
+  
+        setEventosGoogle(eventsRes.data);
+        setLeituras(leiturasRes.data);
+      } catch (err) {
+        setErro("Você precisa estar logado");
+      }
     }
-  }
+  
+    carregar();
+  }, []);
 
   // 🔹 Criar novo evento
   async function criarEvento(e) {
@@ -34,8 +109,8 @@ export default function Calendario() {
     try {
       await api.post("/calendar/event", {
         summary: titulo,
-        startISO: inicio,
-        endISO: fim,
+        start: inicio,
+        end: fim,
       });
 
       // limpa formulário
@@ -49,54 +124,51 @@ export default function Calendario() {
       setErro("Erro ao criar evento");
     }
   }
-
   return (
-    <div>
-      <h1>📅 Meu Calendário de Leitura</h1>
-    <ConectarGoogle/>
-    
-    <DesconectarGoogle/>
+    <AppContainer>
+      <Titulo>📅 Meu Calendário de Leitura</Titulo>
 
-      {erro && <p style={{ color: "red" }}>{erro}</p>}
+      <Actions>
+      <GoogleButton as={ConectarGoogle} />
+      <GoogleButton as={DesconectarGoogle} style={{ backgroundColor: '#ff6b6b' }} />
+      </Actions>
 
-      {/* FORMULÁRIO */}
-      <form onSubmit={criarEvento}>
-        <input
-          placeholder="Título do evento"
-          value={titulo}
-          onChange={(e) => setTitulo(e.target.value)}
-          required
-        />
+      {erro && <p style={{ color: "red", textAlign: "center" }}>{erro}</p>}
 
-        <input
-          type="datetime-local"
-          value={inicio}
-          onChange={(e) => setInicio(e.target.value)}
-          required
-        />
+      <Card>
+        <form onSubmit={criarEvento}>
+          <Input
+            placeholder="Título do evento"
+            value={titulo}
+            onChange={(e) => setTitulo(e.target.value)}
+            required
+          />
+          <Input
+            type="datetime-local"
+            value={inicio}
+            onChange={(e) => setInicio(e.target.value)}
+            required
+          />
+          <Input
+            type="datetime-local"
+            value={fim}
+            onChange={(e) => setFim(e.target.value)}
+            required
+          />
+          <Button type="submit">Criar evento</Button>
+        </form>
+      </Card>
 
-        <input
-          type="datetime-local"
-          value={fim}
-          onChange={(e) => setFim(e.target.value)}
-          required
-        />
-
-        <button>Criar evento</button>
-      </form>
-
-      <hr />
-
-      {/* LISTA DE EVENTOS */}
-      <ul>
+      <EventosGrid>
         {eventos.map((evento) => (
-          <li key={evento._id}>
+          <EventoCard key={evento.id}>
             <strong>{evento.summary || evento.titulo}</strong>
-            <br />
-            {new Date(evento.start?.dateTime || evento.inicio).toLocaleString()}
-          </li>
+            <p>
+              {new Date(evento.start?.dateTime || evento.start || evento.inicio).toLocaleString()}
+            </p>
+          </EventoCard>
         ))}
-      </ul>
-    </div>
+      </EventosGrid>
+    </AppContainer>
   );
 }
