@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
 import { createGlobalStyle } from 'styled-components';
-import CardRecomenda from './componentes/recomendacoes';
 import { BrowserRouter , Routes, Route } from 'react-router-dom' 
 import Header from './componentes/Header';
 import Home from './rotas/Home';
@@ -10,7 +9,7 @@ import Favoritos from './rotas/favoritos';
 import Calendario from './rotas/calendario';
 import Register from './rotas/registro';
 import Login from './rotas/login';
-
+import EstanteLivros from './rotas/estanteLivros';
 
 
 const GlobalStyle = createGlobalStyle
@@ -43,8 +42,11 @@ root.render(
           <Route path="/" element={  <Home />}/>
           <Route path="/cadastre-se" element={<Register/>}/>
           <Route path="/login" element={<Login/>}/>
-            <Route path="/favoritos" element={<Favoritos/>}/>
+          <Route path="/favoritos" element={<Favoritos/>}/>
           <Route path="/calendario" element={<Calendario/>}/>
+          <Route path="/estante" element={<EstanteLivros/>}/>
+
+
       </Routes>
     
     
