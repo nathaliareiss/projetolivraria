@@ -10,7 +10,7 @@ import Calendario from './rotas/calendario';
 import Register from './rotas/registro';
 import Login from './rotas/login';
 import EstanteLivros from './rotas/estanteLivros';
-
+import Perfil from './rotas/perfil';
 
 const GlobalStyle = createGlobalStyle
    ` body {
@@ -42,6 +42,7 @@ root.render(
           <Route path="/" element={  <Home />}/>
           <Route path="/cadastre-se" element={<Register/>}/>
           <Route path="/login" element={<Login/>}/>
+          <Route path="/perfil" element={<Perfil/>}/>
           <Route path="/favoritos" element={<Favoritos/>}/>
           <Route path="/calendario" element={<Calendario/>}/>
           <Route path="/estante" element={<EstanteLivros/>}/>

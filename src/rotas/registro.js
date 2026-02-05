@@ -47,7 +47,7 @@ export default function Register() {
 
 
     try {
-      await axios.post("http://localhost:8000/cadastre-se", {
+      const res=await axios.post("http://localhost:8000/cadastre-se", {
         nome,
         email,
         senha,
