@@ -1,10 +1,15 @@
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom"; 
+
+
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [erro, setErro] = useState("");
+  const navigate = useNavigate(); 
+
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -18,8 +23,8 @@ export default function Login() {
 
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("user", JSON.stringify(res.data.user));
-
-      window.location.href = "/";
+//aqui vai direcionar para a pagina da estante apos o login
+      navigate("/estante");
     } catch (err) {
       if (err.response?.data?.mensagem) {
         setErro(err.response.data.mensagem);

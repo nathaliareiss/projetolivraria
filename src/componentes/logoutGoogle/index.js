@@ -1,4 +1,4 @@
-function DesconectarGoogle({ className }) {
+function DesconectarGoogle({ className, onDesconectado }) {
   const desconectar = async () => {
     const token = localStorage.getItem("token");
 
@@ -13,6 +13,7 @@ function DesconectarGoogle({ className }) {
 
     if (res.ok) {
       alert("Google desconectado com sucesso");
+      onDesconectado?.()
     } else {
       alert(data.erro);
     }
