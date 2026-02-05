@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import {Link, useNavigate}from 'react-router-dom'
-import { useState, useEffect } from 'react';
+import { useAuth } from '../../contextos/AuthContext';
 
 
 
@@ -23,22 +23,14 @@ const Opcoes = styled.ul`
 
 
 function OpcoesHeader() {
-//aqui e onde vai verificar se esta logado ou nao para saber o que exibir
-//no cabecalho
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+//aqui vai usar o contexto no lugar de usar useState local
+    const {isLoggedIn, logout} =useAuth();
     const navigate = useNavigate();
 
-  // verifica se tem token
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    setIsLoggedIn(!!token); // !! converte para boolean (true se tem token, false se não)
-  }, []); // array vazio = roda só uma vez quando monta
 
-   // Função para fazer logout
+   // Função para fazer logout pegando a funcao do contexto criado em contextos
    function handleLogout() {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    setIsLoggedIn(false); // atualiza o estado
+    logout();
     navigate("/login"); // redireciona para login
   }
 

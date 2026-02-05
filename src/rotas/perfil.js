@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import api from "../servicos/api";
+
 
 const AppContainer = styled.div`
   width: 100vw;

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
 import { createGlobalStyle } from 'styled-components';
 import { BrowserRouter , Routes, Route } from 'react-router-dom' 
+import { AuthProvider } from './contextos/AuthContext';
 import Header from './componentes/Header';
 import Home from './rotas/Home';
 import Favoritos from './rotas/favoritos';
@@ -35,6 +36,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <GlobalStyle/>
+    <AuthProvider>
     <BrowserRouter>
      <Header/>
       <Routes>
@@ -52,6 +54,7 @@ root.render(
     
     
     </BrowserRouter>
+    </AuthProvider>
   </React.StrictMode>
 );
 //aqui e feito a importacao do reac router dom para estabelecer as rotas
